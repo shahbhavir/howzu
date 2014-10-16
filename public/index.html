@@ -2,34 +2,58 @@
 <html>
   <head>
     <title>Socket.IO chat</title>
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      body { font: 13px Helvetica, Arial; }
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
-      #messages { list-style-type: none; margin: 0; padding: 0; }
-      #messages li { padding: 5px 10px; }
-      #messages li:nth-child(odd) { background: #eee; }
-      .hidden { display: none; }
-    </style>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
   </head>
   <body>
-    <div id="loginBox">
-      <input id="username" autocomplete="off" /><button id="loginBtn">Enter</button>
+    <div id="loginDiv" class="container">
+      <div class="row">
+        <div class="col-sm-5 col-md-5">
+          <div id="loginBox">
+            <form id="signinForm" class="form-signin" role="form" onsubmit="return false;">
+              <h2 class="form-signin-heading">Sign in</h2>
+              <input id="username" type="text" class="form-control" placeholder="Username" required="" autofocus="">
+              <input type="password" class="form-control" placeholder="Password">
+              <button id="loginBtn" class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+            </form>
+          </div>
+        </div>
+        <div class="col-sm-2 col-md-2"><div class="text-center"><br><br><h1>Or</h1></div></div>
+        <div class="col-sm-5 col-md-5">
+          <div id="signupBox">
+            <form id="signupForm" class="form-signin" role="form" onsubmit="return false;">
+              <h2 class="form-signin-heading">Sign up</h2>
+              <input id="upName" type="text" class="form-control" placeholder="Username" required="" autofocus="">
+              <input type="password" class="form-control" placeholder="Password">
+              <button id="signupBtn" class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
-    <div id="signupBox">
-      <input id="newUser" autocomplete="off" /><button id="signupBtn">Submit</button>
+    <div class="site-wrapper">
+      <div id="chatBox" class="hidden">
+        <ul id="messages"></ul>
+        <form id="chatMsgForm" onsubmit="return false;">
+          <input id="msg" autocomplete="off" /><button type="submit" class="btn btn-primary">Send</button>
+        </form>
+      </div>
+      <div class="cover-footer">
+        <div class="text-center">
+          <p><a target="_blank" href="//github.com/shahbhavir/howzu">howzu</a> by <a target="_blank" href="//github.com/shahbhavir">@shahbhavir</a>.</p>
+        </div>
+      </div>
     </div>
-    <div id="chatBox" class="hidden">
-      <ul id="messages"></ul>
-      <form action="">
-        <input id="m" autocomplete="off" /><button>Send</button>
-      </form>
-    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
     <script src="/socket.io/socket.io.js"></script>
     <!-- <script src="http://code.jquery.com/jquery-1.11.1.js"></script> -->
     <script src="js/jquery.js"></script>
     <script src="js/main.js"></script>
+    <!-- <script src="/js/bootstrap.min.js"></script> -->
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <!-- <script src="/js/ie10-viewport-bug-workaround.js"></script> -->
   </body>
 </html>

@@ -18,8 +18,7 @@ $(function function_name () {
     .done(function( data, textStatus, jqXHR ) {
       if (data.value==='Y') {
         socket.emit('user_connected', $('#username').val());
-        $('#loginBox').addClass('hidden');
-        $('#signupBox').addClass('hidden');
+        $('#loginDiv').addClass('hidden');
         $('#chatBox').removeClass('hidden');
       } else {
         $('#loginBox').after(data.msg || 'Invalid username');
@@ -33,20 +32,19 @@ $(function function_name () {
   var onSignup = function(e){
     var xhr;
     /* Act on the event */
-    if ( !$('#newUser').val() ) return;
+    if ( !$('#upName').val() ) return;
 
     xhr = $.ajax({
       url: '/signup',
       type: 'POST',
       dataType: 'json',
       data: {
-        name: $('#newUser').val()
+        name: $('#upName').val()
       }
     })
     .done(function( data, textStatus, jqXHR ) {
       if (data.value==='Y') {
-        $('#loginBox').after(data.msg || 'Login now with these credentials.');
-        $('#signupBox').addClass('hidden');
+        $('#signupBox').after(data.msg || 'Login now with these credentials.');
       } else {
         $('#signupBox').after(data.msg || 'Invalid username');
       }
@@ -57,14 +55,12 @@ $(function function_name () {
   };
 
   var onMsgSubmit = function(){
-    if ( !$('#m').val() ) return;
+    if ( !$('#msg').val() ) return;
 
-    socket.emit('chat message', $('#m').val());
-    $('#m').val('');
+    socket.emit('chat message', $('#msg').val());
+    $('#msg').val('');
     return false;
   };
-
-  $('form').submit(onMsgSubmit);
 
   socket.on('user_connected', function(name, msg){
     $('#messages').append($('<li>').text(msg));
@@ -72,13 +68,17 @@ $(function function_name () {
 
   socket.on('chat message', function(name, msg){
     $('#messages').append($('<li>').text(msg));
+    $('#messages').animate({
+      scrollTop: $('#messages').height()
+    }, 500);
   });
 
   socket.on('disconnect', function(name, msg){
     $('#messages').append($('<li>').text(msg));
   });
 
-  $('#loginBtn').click(onLogin);
-  $('#signupBtn').click(onSignup);
+  $('#signinForm').submit(onLogin);
+  $('#signupForm').submit(onSignup);
+  $('#chatMsgForm').submit(onMsgSubmit);
 
 });
